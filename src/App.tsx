@@ -1,35 +1,28 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React from 'react';
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
+    <div className="min-h-screen bg-black flex flex-col items-center justify-center p-4 max-w-screen-xl mx-auto">
+      {/* 로고/타이틀 */}
+      <h1 className="text-6xl md:text-8xl font-bold text-white mb-8 tracking-wider">
+        <span className="text-emerald-400">AKJAE</span>-WEB3
+      </h1>
+
+      {/* 검색창 */}
+      <div className="w-full max-w-xl flex">
+        <input
+          type="text"
+          placeholder="관심 있는 WEB3 프로젝트를 검색해보세요..."
+          className="flex-grow p-4 text-lg rounded-l-full border border-gray-700 bg-gray-800 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+        />
+        <button
+          className="px-6 py-4 bg-emerald-600 text-white text-lg rounded-r-full hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+        >
+          검색
         </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    </div>
+  );
 }
 
-export default App
+export default App;

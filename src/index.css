@@ -1,3 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body, #root {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: black; /* 전체 배경을 검정색으로 설정 */
+}
+
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -5,7 +17,7 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  /* background-color는 이제 html, body, #root에서 관리 */
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -23,11 +35,10 @@ a:hover {
 }
 
 body {
-  margin: 0;
+  /* 기존 body 스타일은 이제 html, body, #root에 통합 */
   display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  place-items: center; /* App 컴포넌트를 body 내에서 중앙 정렬 */
+  min-width: 320px; /* 기존 body의 min-width 유지 */
 }
 
 h1 {
@@ -57,7 +68,7 @@ button:focus-visible {
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
-    background-color: #ffffff;
+    /* background-color는 이제 html, body, #root에서 관리 */
   }
   a:hover {
     color: #747bff;

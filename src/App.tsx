@@ -2,7 +2,7 @@ import React from 'react';
 
 function App() {
   return (
-    <div className="min-h-screen bg-black flex flex-col items-center justify-center p-4 max-w-screen-xl mx-auto">
+    <div className="min-h-screen w-full bg-black flex flex-col items-center justify-center p-4">
       {/* 로고/타이틀 */}
       <h1 className="text-6xl md:text-8xl font-bold text-white mb-8 tracking-wider">
         <span className="text-emerald-400">AKJAE</span>-WEB3

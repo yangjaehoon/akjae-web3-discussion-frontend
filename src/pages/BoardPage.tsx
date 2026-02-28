@@ -46,8 +46,10 @@ export default function BoardPage() {
   }, [fetchPosts]);
 
   useEffect(() => {
+    // categories는 배열 직접 반환
     api.get<CategoryResponse[]>('/api/categories').then((r) => setCategories(r.data)).catch(() => {});
-    api.get<ProjectResponse[]>('/api/projects').then((r) => setProjects(r.data)).catch(() => {});
+    // projects는 페이지네이션 반환
+    api.get<PageResponse<ProjectResponse>>('/api/projects').then((r) => setProjects(r.data.content)).catch(() => {});
   }, []);
 
   const updateParam = (key: string, value: string) => {

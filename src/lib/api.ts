@@ -16,7 +16,16 @@ api.interceptors.request.use((config) => {
 });
 
 api.interceptors.response.use(
-  (response) => response,
+  (response) => {
+    // { success, message, data } 래퍼 자동 해제
+    if (response.data && typeof response.data === 'object' && 'success' in response.data) {
+      if (!response.data.success) {
+        return Promise.reject({ response: { data: response.data } });
+      }
+      response.data = response.data.data;
+    }
+    return response;
+  },
   (error) => {
     if (error.response?.status === 401) {
       localStorage.removeItem('token');

@@ -1,12 +1,20 @@
-export interface UserResponse {
-  id: number;
-  username: string;
-  email: string;
+export interface ApiResponse<T> {
+  success: boolean;
+  message: string;
+  data: T;
 }
 
-export interface AuthResponse {
+export interface AuthData {
   token: string;
-  user: UserResponse;
+  username: string;
+  email: string;
+  role: string;
+}
+
+export interface StoredUser {
+  username: string;
+  email: string;
+  role: string;
 }
 
 export interface CategoryResponse {
@@ -24,10 +32,15 @@ export interface PostResponse {
   id: number;
   title: string;
   content: string;
-  author: UserResponse;
-  category?: CategoryResponse;
-  project?: ProjectResponse;
+  authorUsername: string;
+  authorId: number;
+  project: ProjectResponse | null;
+  category: CategoryResponse | null;
+  tags: string[];
+  viewCount: number;
+  likeCount: number;
   commentCount: number;
+  status: string;
   createdAt: string;
   updatedAt: string;
 }
@@ -35,9 +48,10 @@ export interface PostResponse {
 export interface CommentResponse {
   id: number;
   content: string;
-  author: UserResponse;
-  parentId?: number;
-  replies?: CommentResponse[];
+  authorUsername: string;
+  authorId: number;
+  parentId: number | null;
+  replies: CommentResponse[];
   createdAt: string;
   updatedAt: string;
 }

@@ -1,11 +1,11 @@
 import { create } from 'zustand';
-import type { UserResponse } from '../types';
+import type { AuthData, StoredUser } from '../types';
 
 interface AuthState {
   token: string | null;
-  user: UserResponse | null;
+  user: StoredUser | null;
   isAuthenticated: boolean;
-  login: (token: string, user: UserResponse) => void;
+  login: (authData: AuthData) => void;
   logout: () => void;
 }
 
@@ -17,10 +17,15 @@ const useAuthStore = create<AuthState>((set) => ({
   })(),
   isAuthenticated: !!localStorage.getItem('token'),
 
-  login: (token, user) => {
-    localStorage.setItem('token', token);
+  login: (authData) => {
+    const user: StoredUser = {
+      username: authData.username,
+      email: authData.email,
+      role: authData.role,
+    };
+    localStorage.setItem('token', authData.token);
     localStorage.setItem('user', JSON.stringify(user));
-    set({ token, user, isAuthenticated: true });
+    set({ token: authData.token, user, isAuthenticated: true });
   },
 
   logout: () => {

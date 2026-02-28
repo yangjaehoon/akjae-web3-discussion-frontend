@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import api from '../lib/api';
-import type { PostResponse, CommentResponse } from '../types';
+import type { PostResponse, CommentResponse, PageResponse } from '../types';
 import useAuthStore from '../store/authStore';
 import CommentItem from '../components/features/CommentItem';
 import Button from '../components/ui/Button';
@@ -38,8 +38,8 @@ export default function PostDetailPage() {
 
   const fetchComments = useCallback(async () => {
     try {
-      const res = await api.get<CommentResponse[]>(`/api/posts/${id}/comments`);
-      setComments(res.data);
+      const res = await api.get<PageResponse<CommentResponse>>(`/api/posts/${id}/comments`);
+      setComments(res.data.content);
     } catch {
       setComments([]);
     }
@@ -84,12 +84,11 @@ export default function PostDetailPage() {
 
   if (!post) return null;
 
-  const isAuthor = user?.id === post.author.id;
+  const isAuthor = user?.username === post.authorUsername;
 
   return (
     <div className="min-h-screen bg-black text-white">
       <div className="max-w-3xl mx-auto px-4 py-8">
-        {/* 헤더 */}
         <div className="mb-6">
           <Link to="/board" className="text-gray-400 hover:text-white text-sm transition-colors">
             ← 목록으로
@@ -115,8 +114,9 @@ export default function PostDetailPage() {
 
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center gap-3 text-sm text-gray-400">
-              <span className="text-emerald-400 font-medium">{post.author.username}</span>
+              <span className="text-emerald-400 font-medium">{post.authorUsername}</span>
               <span>{formatDate(post.createdAt)}</span>
+              <span>조회 {post.viewCount}</span>
             </div>
             {isAuthor && (
               <div className="flex gap-2">
@@ -153,7 +153,7 @@ export default function PostDetailPage() {
           )}
 
           {comments.length === 0 ? (
-            <p className="text-gray-500 text-sm text-center py-4">첫 댓글을 작성해보세요!</p>
+            <p className="text-gray-500 text-sm text-center py-4">첫 댓글을 작성해보세요.</p>
           ) : (
             <div>
               {comments.map((comment) => (

@@ -4,7 +4,7 @@ import api from '../lib/api';
 import useAuthStore from '../store/authStore';
 import Input from '../components/ui/Input';
 import Button from '../components/ui/Button';
-import type { AuthResponse } from '../types';
+import type { AuthData } from '../types';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -19,8 +19,8 @@ export default function LoginPage() {
     setError('');
     setLoading(true);
     try {
-      const res = await api.post<AuthResponse>('/api/auth/login', { email, password });
-      login(res.data.token, res.data.user);
+      const res = await api.post<AuthData>('/api/auth/login', { email, password });
+      login(res.data);
       navigate('/board');
     } catch (err: unknown) {
       const axiosErr = err as { response?: { data?: { message?: string } } };

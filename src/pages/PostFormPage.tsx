@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import api from '../lib/api';
-import type { PostResponse, CategoryResponse, ProjectResponse } from '../types';
+import type { PostResponse, CategoryResponse, ProjectResponse, PageResponse } from '../types';
 import useAuthStore from '../store/authStore';
 import Input from '../components/ui/Input';
 import Button from '../components/ui/Button';
@@ -27,7 +27,7 @@ export default function PostFormPage() {
       return;
     }
     api.get<CategoryResponse[]>('/api/categories').then((r) => setCategories(r.data)).catch(() => {});
-    api.get<ProjectResponse[]>('/api/projects').then((r) => setProjects(r.data)).catch(() => {});
+    api.get<PageResponse<ProjectResponse>>('/api/projects').then((r) => setProjects(r.data.content)).catch(() => {});
 
     if (isEdit && id) {
       api.get<PostResponse>(`/api/posts/${id}`).then((r) => {

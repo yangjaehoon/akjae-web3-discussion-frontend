@@ -33,9 +33,10 @@ export default function PostCard({ post }: PostCardProps) {
           </div>
         </div>
         <div className="flex items-center gap-4 mt-3 text-xs text-gray-500">
-          <span>{post.author.username}</span>
+          <span>{post.authorUsername}</span>
           <span>{formatDate(post.createdAt)}</span>
           <span>댓글 {post.commentCount}</span>
+          <span>조회 {post.viewCount}</span>
         </div>
       </div>
     </Link>

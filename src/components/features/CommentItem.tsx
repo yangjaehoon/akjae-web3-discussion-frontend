@@ -21,7 +21,7 @@ export default function CommentItem({ comment, postId, onRefresh }: CommentItemP
   const [replyContent, setReplyContent] = useState('');
   const [submitting, setSubmitting] = useState(false);
 
-  const isAuthor = user?.id === comment.author.id;
+  const isAuthor = user?.username === comment.authorUsername;
 
   const handleDelete = async () => {
     if (!confirm('댓글을 삭제하시겠습니까?')) return;
@@ -56,7 +56,7 @@ export default function CommentItem({ comment, postId, onRefresh }: CommentItemP
       <div className="flex items-start justify-between">
         <div className="flex-1">
           <div className="flex items-center gap-2 mb-1">
-            <span className="text-emerald-400 font-medium text-sm">{comment.author.username}</span>
+            <span className="text-emerald-400 font-medium text-sm">{comment.authorUsername}</span>
             <span className="text-gray-600 text-xs">{formatDate(comment.createdAt)}</span>
           </div>
           <p className="text-gray-200 text-sm whitespace-pre-wrap">{comment.content}</p>
@@ -104,12 +104,12 @@ export default function CommentItem({ comment, postId, onRefresh }: CommentItemP
               <div className="flex items-start justify-between">
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-1">
-                    <span className="text-emerald-400 font-medium text-sm">{reply.author.username}</span>
+                    <span className="text-emerald-400 font-medium text-sm">{reply.authorUsername}</span>
                     <span className="text-gray-600 text-xs">{formatDate(reply.createdAt)}</span>
                   </div>
                   <p className="text-gray-300 text-sm whitespace-pre-wrap">{reply.content}</p>
                 </div>
-                {user?.id === reply.author.id && (
+                {user?.username === reply.authorUsername && (
                   <button
                     onClick={async () => {
                       if (!confirm('댓글을 삭제하시겠습니까?')) return;

@@ -1,28 +1,61 @@
-import React from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Navbar from './components/features/Navbar';
+import HomePage from './pages/HomePage';
+import BoardPage from './pages/BoardPage';
+import PostDetailPage from './pages/PostDetailPage';
+import PostFormPage from './pages/PostFormPage';
+import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
 
-function App() {
+function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="min-h-screen w-full bg-black flex flex-col items-center justify-center p-4">
-      {/* 로고/타이틀 */}
-      <h1 className="text-6xl md:text-8xl font-bold text-white mb-8 tracking-wider">
-        <span className="text-emerald-400">AKJAE</span>-WEB3
-      </h1>
-
-      {/* 검색창 */}
-      <div className="w-full max-w-xl flex">
-        <input
-          type="text"
-          placeholder="관심 있는 WEB3 프로젝트를 검색해보세요..."
-          className="flex-grow p-4 text-lg rounded-l-full border border-gray-700 bg-gray-800 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-emerald-500"
-        />
-        <button
-          className="px-6 py-4 bg-emerald-600 text-white text-lg rounded-r-full hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500"
-        >
-          검색
-        </button>
-      </div>
+    <div className="min-h-screen bg-black">
+      <Navbar />
+      {children}
     </div>
   );
 }
 
-export default App;
+export default function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route
+          path="/board"
+          element={
+            <Layout>
+              <BoardPage />
+            </Layout>
+          }
+        />
+        <Route
+          path="/posts/new"
+          element={
+            <Layout>
+              <PostFormPage />
+            </Layout>
+          }
+        />
+        <Route
+          path="/posts/:id"
+          element={
+            <Layout>
+              <PostDetailPage />
+            </Layout>
+          }
+        />
+        <Route
+          path="/posts/:id/edit"
+          element={
+            <Layout>
+              <PostFormPage />
+            </Layout>
+          }
+        />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
+      </Routes>
+    </BrowserRouter>
+  );
+}
